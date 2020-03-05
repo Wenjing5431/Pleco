@@ -936,7 +936,6 @@ const mapStateToProps = state => {
   return { fullAnnots: state.fullAnnot };
 };
 
-export default connect(
-  mapStateToProps,
-  { fetchFullAnnot, fetchPageAnnots }
-)(NetworkMap);
+export default connect(mapStateToProps, { fetchFullAnnot, fetchPageAnnots })(
+  NetworkMap
+);
