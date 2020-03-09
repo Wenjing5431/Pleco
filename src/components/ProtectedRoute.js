@@ -4,7 +4,7 @@ import Auth from "./Auth";
 
 export const ProtectedRoute = ({
   component: Component,
-  checkAuth: checkAuth,
+  checkAuth: CheckAuth,
   ...rest
 }) => {
   return (
@@ -12,7 +12,6 @@ export const ProtectedRoute = ({
       {...rest}
       render={props => {
         if (Auth.isAuthenticated()) {
-          console.log("checking auth:", checkAuth);
           return <Component {...props} />;
         } else {
           return (
@@ -30,5 +29,3 @@ export const ProtectedRoute = ({
     />
   );
 };
-
-// Auth.isAuthenticated()

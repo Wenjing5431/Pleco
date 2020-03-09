@@ -7,15 +7,9 @@ class Header extends React.Component {
   constructor(props) {
     super(props);
     this.renderLogout = this.renderLogout.bind(this);
-    // this.state = {
-    //   checkAuth: this.props.checkAuth
-    // };
   }
 
   renderLogout = () => {
-    // this.setState({
-    //   checkAuth: false
-    // });
     Auth.logout(() => {
       this.props.history.push({
         pathname: "/"
@@ -24,14 +18,9 @@ class Header extends React.Component {
   };
 
   render() {
-    // console.log("header props", this.props.username);
-    // console.log("authentication", Auth.isAuthenticated());
-    const { checkAuth } = this.props;
     const { username } = this.props;
     const authenticated = Auth.isAuthenticated();
 
-    console.log("check header auth:", this.props.checkAuth);
-    // console.log(username ? "yes" : "no");
     return (
       <div className="ui secondary fixed pointing menu header">
         {authenticated ? (
@@ -45,14 +34,12 @@ class Header extends React.Component {
             Personal Learning Compass
           </Link>
         )}
-        {/* <Link to="/" className="item">
-          <i className="fas fa-rocket header-icon" />
-          Personal Learning Booster
-        </Link> */}
+
         <div className="right menu">
           <a
             href="https://github.com/Wenjing5431/PLB_Capstone"
             target="_blank"
+            rel="noopener noreferrer"
             className="item"
           >
             Github
@@ -61,9 +48,9 @@ class Header extends React.Component {
           {authenticated ? (
             <span className="header-span">
               <p className="item">{username}</p>
-              <a className="item" onClick={this.renderLogout}>
+              <button className="item" onClick={this.renderLogout}>
                 Logout
-              </a>
+              </button>
             </span>
           ) : (
             <span className="header-span">

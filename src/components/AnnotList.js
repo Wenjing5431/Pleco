@@ -23,41 +23,7 @@ class AnnotList extends React.Component {
   componentDidMount() {
     const { username } = this.props.location.state;
     this.props.fetchAnnots(username);
-
-    console.log("try pass from component:", username);
-    // const token = "6879-QLwKBhX26Ja-nDyHvT5HslkRkuU41tr3W7GscMy3yVY";
-    // const headers = {
-    //   Authorization: "Bearer" + token,
-    //   "Content-type": "application/json"
-    // };
-    // axios({
-    //   method: "GET",
-    //   url: "https://hypothes.is/api/",
-    //   headers: headers
-    // })
-    //   .then(response => {
-    //     console.log("response data:", response.data);
-    //   })
-    //   .catch(error => {
-    //     console.log("error:", error);
-    //   });
   }
-
-  //   renderList() {
-  //     return this.props.annots.map(annot => {
-  //       return (
-  //         <div className="item" key={annot.id}>
-  //           <div className="content">
-  //             <div className="description">
-  //               <h2>{annot.user}</h2>
-  //               <p>{annot.text}</p>
-  //               <h5>{annot.tags.join()}</h5>
-  //             </div>
-  //           </div>
-  //         </div>
-  //       );
-  //     });
-  //   }
 
   renderTag() {
     var a = [];
@@ -69,11 +35,11 @@ class AnnotList extends React.Component {
     for (var j = 0; j < a.length; j++) {
       flat = flat.concat(a[j]);
     }
-    // console.log("bbb", flat);
+
     var uniqueTags = flat.filter((elem, index, self) => {
       return index === self.indexOf(elem);
     });
-    // console.log("unique", uniqueTags);
+
     var tagCounts = [];
     for (var k = 0; k < flat.length; k++) {
       var tagElement = flat[k];
@@ -81,7 +47,7 @@ class AnnotList extends React.Component {
         ? tagCounts[tagElement] + 1
         : 1;
     }
-    // console.log("counts:", tagCounts);
+
     const tagArray = [];
     for (var n = 0; n < uniqueTags.length; n++) {
       tagArray.push({
@@ -89,7 +55,6 @@ class AnnotList extends React.Component {
         count: tagCounts[uniqueTags[n]]
       });
     }
-    // console.log("lalal", tagArray);
 
     return tagArray.map(tag => {
       return (
@@ -114,7 +79,6 @@ class AnnotList extends React.Component {
   };
 
   onClickTag = tag => {
-    // console.log("tag by clicked", tag);
     this.props.fetchSearchedAnnots(tag, this.state.limit);
     this.setState({
       selectedTerm: tag,
@@ -132,28 +96,10 @@ class AnnotList extends React.Component {
     this.props.fetchSearchedAnnots(this.state.selectedTerm, Number(limit));
   };
 
-  // showMore() {
-  //   this.state.itemsToShow === 20
-  //     ? this.setState({ itemsToShow: this.state.try.length, expanded: true })
-  //     : this.setState({ itemsToShow: 20, expanded: false });
-  // }
-
-  //   renderSearchedAnnots() {
-  //     console.log("haha", this.props.searchedAnnots);
-  //     return this.props.searchedAnnots.map(annot => {
-  //       return (
-  //         <div>
-  //           <p>{annot.user}</p>
-  //           <p>{annot.text}</p>
-  //         </div>
-  //       );
-  //     });
-  //   }
-
   render() {
     const data = this.props.searchedAnnots;
     const Pagedata = this.props.pageAnnots;
-    // console.log("all annots on this page!:", this.props.pageAnnots);
+
     return (
       <div className="dashboard">
         <div className="dashboard-container">
@@ -181,7 +127,6 @@ class AnnotList extends React.Component {
 }
 
 const mapStateToProps = state => {
-  // console.log("state", state);
   return {
     annots: state.annots,
     searchedAnnots: state.searchedAnnots,
@@ -189,12 +134,6 @@ const mapStateToProps = state => {
   };
 };
 
-// const mapDispatchToPros = dispatch => ({
-//   fetchSearchedAnnots: term => dispatch(fetchSearchedAnnots(term)),
-//   fetchAnnots: () => dispatch(fetchAnnots())
-// });
-
-export default connect(
-  mapStateToProps,
-  { fetchAnnots, fetchSearchedAnnots }
-)(AnnotList);
+export default connect(mapStateToProps, { fetchAnnots, fetchSearchedAnnots })(
+  AnnotList
+);

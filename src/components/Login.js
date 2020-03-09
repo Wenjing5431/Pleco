@@ -5,7 +5,7 @@ import Auth from "./Auth";
 class Login extends React.Component {
   state = {
     username: "",
-    // userLogged: false,
+
     error: false
   };
 
@@ -16,7 +16,6 @@ class Login extends React.Component {
   onLoginSubmit = e => {
     e.preventDefault();
     const { username } = this.state;
-    const { history } = this.props;
     this.setState({ error: false });
 
     if (username === "") {
@@ -55,10 +54,6 @@ class Login extends React.Component {
               />
             </div>
             <div className="field">
-              {/* <label className="api-label">
-                You can generate a personal API token via Hypothesis Settings >
-                Developer
-              </label> */}
               <label className="api-label">
                 After you logged in Hypothesis, you can find your user name in
                 the top navigation bar.
@@ -74,13 +69,13 @@ class Login extends React.Component {
               </div>
             )}
           </form>
-
-          {/* <Link to={{ pathname: "/dashboard", state: { foo: "bar" } }}>
-            <button className="ui primary button">Set Token</button>
-          </Link> */}
         </div>
         <div className="ui horizontal divider">Or</div>
-        <a href="https://web.hypothes.is/" target="_blank">
+        <a
+          href="https://web.hypothes.is/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           <button className="ui primary button">
             Create Hypothesis Account
           </button>

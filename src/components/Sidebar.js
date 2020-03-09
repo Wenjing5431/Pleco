@@ -16,20 +16,12 @@ class AnnotSidebar extends React.Component {
     }
   }
 
-  // htmlDecode(input) {
-  //   var e = document.createElement("div");
-  //   e.innerHTML = input;
-  //   return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
-  // }
-
   render() {
     const annotData = this.props.fullAnnots.annotData;
-    console.log("sidebar data", annotData);
 
     if (annotData.user) {
-      var urls = /(\b(https?|ftp):\/\/[A-Z0-9+&@#\/%?=~_|!:,.;-]*[-A-Z0-9+&@#\/%=~_|])/gim;
+      var urls = /(\b(https?|ftp):\/\/[A-Z0-9+&@#%?=~_|!:,.;-]*[-A-Z0-9+&@#%=~_|])/gim;
       var imgs = /(https?:\/\/.*\.(?:jpeg|jpg|png|gif))/i;
-      console.log("annot data text", annotData.text);
 
       if (annotData.text.match(urls) && !annotData.text.match(imgs)) {
         if (annotData.text.includes("a href")) {
@@ -45,7 +37,6 @@ class AnnotSidebar extends React.Component {
             '<a href="$1" target="_blank">$1</a>'
           );
         }
-        console.log("come on!");
       } else if (annotData.text.match(/\.(jpeg|jpg|png|gif)/g)) {
         var regex = /(https?:\/\/.*\.(?:png|jpg))/i;
         annotData.text = annotData.text
@@ -71,8 +62,6 @@ class AnnotSidebar extends React.Component {
             );
           }
         }
-
-        console.log("come on baby!");
       }
 
       var user = annotData.user.substring(
@@ -83,12 +72,13 @@ class AnnotSidebar extends React.Component {
       var link = annotData.links.incontext;
       var userLink = "https://hypothes.is/users/" + user;
       var time = annotData.created.substring(0, annotData.created.indexOf("T"));
+      var target;
       if (annotData.target[0].selector !== undefined) {
         const seleLength = annotData.target[0].selector.length;
         const realIndex = seleLength - 1;
-        var target = annotData.target[0].selector[realIndex].exact;
+        target = annotData.target[0].selector[realIndex].exact;
       } else {
-        var target = "";
+        target = "";
       }
     }
 
@@ -100,13 +90,23 @@ class AnnotSidebar extends React.Component {
               <p className="user-info">
                 <i className="user icon lar" />
                 <span className="user-name">Annotator: </span>{" "}
-                <a href={userLink} target="_blank" className="user-link">
+                <a
+                  href={userLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="user-link"
+                >
                   {user}
                 </a>
               </p>
               <p className="annot-info">
                 <i className="linkify icon mid" />
-                <a href={link} target="_blank" className="context-link">
+                <a
+                  href={link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="context-link"
+                >
                   Visit annotation in context
                 </a>
               </p>
@@ -126,7 +126,6 @@ class AnnotSidebar extends React.Component {
               <p className="create-time">{time}</p>
             </div>
             <p className="target-info">{target}</p>
-            {/* <p className="text-info">{annotData.text}</p> */}
 
             <div
               className="text-info"

@@ -9,16 +9,19 @@ const RootText = () => {
         <h1 className="text-content-pri">
           Build Personal Learning <br /> Network, <br />
           With Anyone, <br />
-          Anywhere<a className="text-color">.</a>
+          Anywhere<span className="text-color">.</span>
         </h1>
         <p className="text-content-sub">
           Discover and explore{" "}
-          <a className="text-color">new learning resources of insterest.</a>{" "}
+          <span className="text-color">
+            new learning resources of insterest.
+          </span>{" "}
           <br /> Link{" "}
           <a
             className="text-color"
             href="https://web.hypothes.is/"
             target="_blank"
+            rel="noopener noreferrer"
           >
             Hypothesis{" "}
           </a>

@@ -5,7 +5,7 @@ import notFound from "../assets/notFound.png";
 export const RandomPage = () => {
   return (
     <div className="ui container">
-      <img className="not-found" src={notFound} alt="404 image" />
+      <img className="not-found" src={notFound} alt="404 icon" />
       <h3 className="content-container content">OOPS! PAGE NOT FOUND.</h3>
     </div>
   );

@@ -1,8 +1,7 @@
 import "../css/App.css";
 import React from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import Header from "./Header";
-// import Footer from "./Footer";
 import RootPage from "./RootPage";
 import Login from "./Login";
 import AnnotList from "./AnnotList";
@@ -33,7 +32,6 @@ class App extends React.Component {
   };
 
   LoginHandler = item => {
-    console.log("pass from login:", item);
     this.setState({ username: item });
   };
 
@@ -44,8 +42,6 @@ class App extends React.Component {
 
     return (
       <div className="app">
-        {/* <BrowserRouter>
-          <div> */}
         <Header
           username={this.state.username}
           checkAuth={this.state.authenticated.toString()}
@@ -66,9 +62,6 @@ class App extends React.Component {
           />
           <Route path="*" component={RandomPage} />
         </Switch>
-        {/* <Footer /> */}
-        {/* </div>
-        </BrowserRouter> */}
       </div>
     );
   }

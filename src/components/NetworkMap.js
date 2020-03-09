@@ -36,11 +36,7 @@ class NetworkMap extends React.Component {
   };
 
   componentDidUpdate() {
-    // console.log("pass tag here:", this.props.passTag);
-    // console.log("show me", this.props.searchedAnnots.data);
-
     const selectedTag = this.props.passTag;
-    // const backMap = this.props.backMap;
 
     const timeFilter = this.props.handleTime;
     const today = new Date();
@@ -67,12 +63,12 @@ class NetworkMap extends React.Component {
       } else if (timeFilter === "" || "all") {
         return this.props.searchedAnnots.data;
       }
+      return false;
     });
 
     var array = filterArray.filter(arr => {
       return arr.references === undefined;
     });
-    console.log("array:", array);
 
     // Image & link display
     var self = this;
@@ -80,11 +76,10 @@ class NetworkMap extends React.Component {
     function displayImgLink(chartData) {
       if (self.state.reload) {
         for (var i = 0; i < chartData.length; i++) {
-          var urls = /(\b(https?|ftp):\/\/[A-Z0-9+&@#\/%?=~_|!:,.;-]*[-A-Z0-9+&@#\/%=~_|])/gim;
+          var urls = /(\b(https?|ftp):\/\/[A-Z0-9+&@#%?=~_|!:,.;-]*[-A-Z0-9+&@#%=~_|])/gim;
           var imgs = /(https?:\/\/.*\.(?:jpeg|jpg|png|gif))/i;
 
           if (chartData[i].text.match(urls) && !chartData[i].text.match(imgs)) {
-            console.log("look! have url and image!", chartData[i].text);
             if (chartData[i].text.includes("a href")) {
               chartData[i].text = chartData[i].text.replace(
                 /<a href=/gi,
@@ -125,7 +120,6 @@ class NetworkMap extends React.Component {
             }
           }
           if (i === chartData.length - 1) {
-            console.log("hahahhahaha:", i);
             self.setState({
               reload: false
             });
@@ -137,14 +131,13 @@ class NetworkMap extends React.Component {
     function displayImgLinkPage(chartDataPage) {
       if (self.state.reloadPage) {
         for (var i = 0; i < chartDataPage.length; i++) {
-          var urls = /(\b(https?|ftp):\/\/[A-Z0-9+&@#\/%?=~_|!:,.;-]*[-A-Z0-9+&@#\/%=~_|])/gim;
+          var urls = /(\b(https?|ftp):\/\/[A-Z0-9+&@#%?=~_|!:,.;-]*[-A-Z0-9+&@#%=~_|])/gim;
           var imgs = /(https?:\/\/.*\.(?:jpeg|jpg|png|gif))/i;
 
           if (
             chartDataPage[i].text.match(urls) &&
             !chartDataPage[i].text.match(imgs)
           ) {
-            console.log("look! have url and image!", chartDataPage[i].text);
             if (chartDataPage[i].text.includes("a href")) {
               chartDataPage[i].text = chartDataPage[i].text.replace(
                 /<a href=/gi,
@@ -185,7 +178,6 @@ class NetworkMap extends React.Component {
             }
           }
           if (i === chartDataPage.length - 1) {
-            console.log("hahahhahaha:", i);
             self.setState({
               reloadPage: false
             });
@@ -194,126 +186,19 @@ class NetworkMap extends React.Component {
       }
     }
 
-    // if (self.state.reload) {
-    //   for (var i = 0; i < array.length; i++) {
-    //     var urls = /(\b(https?|ftp):\/\/[A-Z0-9+&@#\/%?=~_|!:,.;-]*[-A-Z0-9+&@#\/%=~_|])/gim;
-    //     var imgs = /(https?:\/\/.*\.(?:jpeg|jpg|png|gif))/i;
-
-    //     if (array[i].text.match(urls) && !array[i].text.match(imgs)) {
-    //       console.log("look! have url and image!", array[i].text);
-    //       if (array[i].text.includes("a href")) {
-    //         array[i].text = array[i].text.replace(
-    //           /<a href=/gi,
-    //           '<a target="_blank" href='
-    //         );
-    //       } else if (array[i].text.includes("iframe")) {
-    //         console.log("iframe:", array[i].text);
-    //       } else {
-    //         array[i].text = array[i].text.replace(
-    //           urls,
-    //           '<a href="$1" target="_blank">$1</a>'
-    //         );
-    //       }
-    //     } else if (array[i].text.match(/\.(jpeg|jpg|png|gif)/g)) {
-    //       var regex = /(https?:\/\/.*\.(?:png|jpg))/i;
-    //       array[i].text = array[i].text
-    //         .replace("![]", "")
-    //         .replace(/[()]/g, "")
-    //         .replace(
-    //           regex,
-    //           '<img src="$1" width="50%" style="margin-bottom: 0.2rem; margin-top: 0.2rem; margin-left: auto; margin-right: auto; float: none; display: block"></img>'
-    //         );
-    //       var nonImgUrl = /(?:^|[^"'])((ftp|http|https|file):\/\/[\S]+(\b|$))/gim;
-    //       if (array[i].text.match(nonImgUrl)) {
-    //         if (array[i].text.includes("a href")) {
-    //           array[i].text = array[i].text.replace(
-    //             nonImgUrl,
-    //             '<a target="_blank" href='
-    //           );
-    //         } else if (array[i].text.includes("iframe")) {
-    //           console.log("iframe:", array[i].text);
-    //         } else {
-    //           array[i].text = array[i].text.replace(
-    //             nonImgUrl,
-    //             '<a href="$1" target="_blank">$1</a>'
-    //           );
-    //         }
-    //       }
-    //     }
-    //     if (i === array.length - 1) {
-    //       console.log("hahahhahaha:", i);
-    //       self.setState({
-    //         reload: false
-    //       });
-    //     }
-    //   }
-    // }
-
-    // console.log("this is the new array", array);
-
     const pageArray = this.props.searchedAnnots.Pagedata.filter(arr => {
       return arr.references === undefined;
     });
-    console.log("new annots for the page", pageArray);
 
     displayImgLink(array);
     displayImgLinkPage(pageArray);
-
-    // Fake data for test
-    var testData = {
-      nodes: [
-        {
-          id: "A0N0U0C0",
-          style: {
-            label: "under development"
-          },
-          loaded: true
-        },
-        {
-          id: "A0N1U1C1",
-          style: {
-            label: "under development"
-          },
-          loaded: true
-        },
-        {
-          id: "A0N2U2C2",
-          style: {
-            label: "under development"
-          },
-          loaded: true
-        }
-      ],
-      links: [
-        {
-          id: "LNUC0",
-          from: "A0N0U0C0",
-          to: this.state.nodeId
-        },
-        {
-          id: "LNUC1",
-          from: "A0N1U1C1",
-          to: this.state.nodeId
-        },
-        {
-          id: "LNUC2",
-          from: "A0N2U2C2",
-          to: this.state.nodeId
-        }
-      ]
-    };
-
-    // const pageAnnots = this.props.pageAnnots;
-    // if (pageAnnots.length !== 0) {
-    //   console.log("all annots on page!!", pageAnnots);
-    // }
 
     const annotArray = array.map(arr => {
       return {
         annotId: arr.id,
         created: arr.created,
         document: arr.document,
-        // links: arr.links,
+
         tags: arr.tags,
         target: arr.target,
         text: arr.text,
@@ -325,7 +210,6 @@ class NetworkMap extends React.Component {
         )
       };
     });
-    // console.log("no references:", annotArray);
 
     const arrayModify = annotArray.reduce((o, cur) => {
       var occurs = o.reduce((n, item, i) => {
@@ -349,15 +233,12 @@ class NetworkMap extends React.Component {
       return o;
     }, []);
 
-    // console.log("same user array:", arrayModify);
-
     // Annots on the same page
     const pageAnnotArray = pageArray.map(arr => {
       return {
         annotId: arr.id,
         created: arr.created,
         document: arr.document,
-        // links: arr.links,
         tags: arr.tags,
         target: arr.target,
         text: arr.text,
@@ -377,15 +258,11 @@ class NetworkMap extends React.Component {
       if (occurs >= 0) {
         o[occurs].text = o[occurs].text.concat(cur.text);
         o[occurs].annotId = o[occurs].annotId.concat(cur.annotId);
-        // o[occurs].uri = o[occurs].uri.concat(cur.uri);
-        // o[occurs].incontext = o[occurs].incontext.concat(cur.incontext);
       } else {
         var obj = {
           user: cur.user,
           text: [cur.text],
           annotId: [cur.annotId]
-          // uri: [cur.uri],
-          // incontext: [cur.incontext]
         };
         o = o.concat([obj]);
       }
@@ -402,11 +279,9 @@ class NetworkMap extends React.Component {
 
     const newNodesP = [];
     const newNodesA = [];
-    // const newNodesG = [];
 
     const newLinksP = [];
     const newLinksA = [];
-    // const newlinksG = [];
 
     // nodes data
     for (var i = 0; i < arrayModify.length; i++) {
@@ -493,11 +368,11 @@ class NetworkMap extends React.Component {
     }
 
     // Annots on the same page -- nodes data
-    for (var i = 0; i < pageArrayModify.length; i++) {
+    for (var l = 0; l < pageArrayModify.length; l++) {
       newNodesP.push({
-        id: "C" + i,
+        id: "C" + l,
         style: {
-          label: pageArrayModify[i].user,
+          label: pageArrayModify[l].user,
           fillColor: "#65BCF8",
           lineColor: "rgba(89, 168, 223, 0.5)"
         },
@@ -506,30 +381,30 @@ class NetworkMap extends React.Component {
       });
     }
 
-    for (var j = 0; j < pageArrayModify.length; j++) {
-      if (pageArrayModify[j].text.length > 1) {
-        for (var k = 0; k < pageArrayModify[j].text.length; k++) {
+    for (var m = 0; m < pageArrayModify.length; m++) {
+      if (pageArrayModify[m].text.length > 1) {
+        for (var n = 0; n < pageArrayModify[m].text.length; n++) {
           newNodesA.push({
-            id: "C" + j + "NN" + k,
+            id: "C" + m + "NN" + n,
             style: {
-              label: pageArrayModify[j].text[k],
+              label: pageArrayModify[m].text[n],
               fillColor: "#68CF9D",
               lineColor: "rgba(98, 188, 144, 0.5)"
             },
-            annotId: pageArrayModify[j].annotId[k],
+            annotId: pageArrayModify[m].annotId[n],
             loaded: true,
             multiple: "yes"
           });
         }
       } else {
         newNodesA.push({
-          id: "C" + j + "NN" + j,
+          id: "C" + m + "NN" + m,
           style: {
-            label: pageArrayModify[j].text[0],
+            label: pageArrayModify[m].text[0],
             fillColor: "#68CF9D",
             lineColor: "rgba(98, 188, 144, 0.5)"
           },
-          annotId: pageArrayModify[j].annotId[0],
+          annotId: pageArrayModify[m].annotId[0],
           loaded: true
         });
       }
@@ -541,65 +416,63 @@ class NetworkMap extends React.Component {
       newNodesP,
       newNodesA
     );
-    // console.log("newNodes", newNodes);
 
     // links data
-    for (var i = 0; i < newNodesM.length; i++) {
+    for (var o = 0; o < newNodesM.length; o++) {
       newLinksM.push({
-        id: "L" + i,
-        from: newNodesM[i].id,
+        id: "L" + o,
+        from: newNodesM[o].id,
         to: "T",
         type: "creators"
       });
     }
 
-    for (var i = 0; i < newNodesT.length; i++) {
+    for (var p = 0; p < newNodesT.length; p++) {
       newLinksT.push({
-        id: "LN" + i,
-        from: newNodesT[i].id,
-        to: newNodesT[i].id.substring(
-          newNodesT[i].id.indexOf("A"),
-          newNodesT[i].id.indexOf("N")
+        id: "LN" + p,
+        from: newNodesT[p].id,
+        to: newNodesT[p].id.substring(
+          newNodesT[p].id.indexOf("A"),
+          newNodesT[p].id.indexOf("N")
         ),
         type: "annots"
       });
       newLinksF.push({
-        id: "LNU" + i,
-        from: newNodesF[i].id,
-        to: newNodesF[i].id.substring(
-          newNodesF[i].id.indexOf("A"),
-          newNodesF[i].id.indexOf("U")
+        id: "LNU" + p,
+        from: newNodesF[p].id,
+        to: newNodesF[p].id.substring(
+          newNodesF[p].id.indexOf("A"),
+          newNodesF[p].id.indexOf("U")
         ),
         type: "uri"
       });
     }
 
     // Annots on the same page -- links data
-    for (var i = 0; i < newNodesP.length; i++) {
+    for (var q = 0; q < newNodesP.length; q++) {
       newLinksP.push({
-        id: "LL" + i,
-        from: newNodesP[i].id,
+        id: "LL" + q,
+        from: newNodesP[q].id,
         to: this.state.nodeId,
         type: "creators"
       });
     }
 
-    for (var i = 0; i < newNodesA.length; i++) {
+    for (var r = 0; r < newNodesA.length; r++) {
       newLinksA.push({
-        id: "LNN" + i,
-        from: newNodesA[i].id,
-        to: newNodesA[i].id.substring(
-          newNodesA[i].id.indexOf("C"),
-          newNodesA[i].id.indexOf("NN")
+        id: "LNN" + r,
+        from: newNodesA[r].id,
+        to: newNodesA[r].id.substring(
+          newNodesA[r].id.indexOf("C"),
+          newNodesA[r].id.indexOf("NN")
         ),
         type: "annots"
       });
     }
 
     var newLinks = newLinksM.concat(newLinksT, newLinksF, newLinksP, newLinksA);
-    // console.log("newLinks", newLinks);
 
-    var self = this;
+    // var self = this;
     var selfProps = this.props;
 
     if (selectedTag !== "") {
@@ -611,9 +484,7 @@ class NetworkMap extends React.Component {
         navigation: {
           focusNodeExpansionRadius: 1,
           initialNodes: ["T"],
-          // mode: "focusnodes",
           mode: "manual"
-          // autoZoomOnFocus: true
         },
         layout: {
           mode: "dynamic",
@@ -762,7 +633,7 @@ class NetworkMap extends React.Component {
           node.radius = 30;
           node.items = [
             {
-              text: "aaa",
+              text: "transparent",
               textStyle: { fillColor: "transparent" },
               backgroundStyle: {
                 fillColor: "transparent",
@@ -786,8 +657,6 @@ class NetworkMap extends React.Component {
 
       function graphDoubleClick(event) {
         event.preventDefault();
-        // console.log("event data:", event.clickNode.data);
-        // console.log("tell me double", event.clickNode);
 
         if (event.clickNode === undefined) {
           return;
@@ -799,24 +668,15 @@ class NetworkMap extends React.Component {
           });
 
           // save and restore state
-
           setTimeout(function() {
             var state = t.saveState();
-            self.setState(
-              {
-                newState: state
-              },
-              function() {
-                console.log("update state:", self.state.newState);
-              }
-            );
+            self.setState({
+              newState: state
+            });
           }, 0);
-          console.log("check state:", t.saveState());
-          console.log("the state in state", self.state.newState);
 
           selfProps.fetchFullAnnot(event.clickNode.data.annotId);
         } else if (event.clickNode.data.incontext) {
-          // console.log("original page:", event.clickNode.data.incontext);
           window.open(event.clickNode.data.incontext);
         } else if (event.clickNode.data.user) {
           window.open(
@@ -831,8 +691,6 @@ class NetworkMap extends React.Component {
           event.clickNode.data.incontext &&
           event.clickNode.data.incontext !== self.state.incontext
         ) {
-          // console.log("search annot on this page:", event.clickNode.data);
-
           self.setState({
             nodeId: event.clickNode.data.id,
             incontext: event.clickNode.data.incontext,
@@ -840,7 +698,7 @@ class NetworkMap extends React.Component {
             preTag: selectedTag
           });
 
-          // save and restore state
+          // save and restore link state
           setTimeout(function() {
             var linkState = t.saveState();
             self.setState({
@@ -852,12 +710,6 @@ class NetworkMap extends React.Component {
         }
       }
 
-      // save and restore state
-      // function restoreNetwork(s) {
-      //   if (s !== "" && selectedTag === self.state.preTag) {
-      //     t.restoreState(s);
-      //   }
-      // }
       if (
         self.state.newState !== "" &&
         selectedTag === self.state.preTag &&
@@ -871,7 +723,7 @@ class NetworkMap extends React.Component {
   handleSidebarHide = () => this.setState({ visible: false });
 
   renderAnnots() {
-    if (this.props.passTag == "") {
+    if (this.props.passTag === "") {
       return (
         <div className="img-container">
           <img className="temp-image" src={networkIcon} alt="network icon" />
@@ -919,11 +771,8 @@ class NetworkMap extends React.Component {
 
           <Sidebar.Pusher>
             <Segment basic>
-              {/* <div>{this.renderBack()}</div> */}
               <div id="chartNetChart" className="chart" />
-              {/* <div>{this.renderBack()}</div> */}
 
-              {/* <p className="cover" /> */}
               <div>{this.renderAnnots()}</div>
             </Segment>
           </Sidebar.Pusher>
