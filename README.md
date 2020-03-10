@@ -1,6 +1,6 @@
 # Personal Learning Compass
 
-Personal Learning Compass is a Personal Learning Environment (PLE) support application that can:
+[Personal Learning Compass](https://umncolig.com/) is a Personal Learning Environment (PLE) support application that can:
 
 - Allow learners to log in with their [Hypothesis](https://web.hypothes.is/) account name;
 
