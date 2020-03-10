@@ -1,8 +1,8 @@
 # Personal Learning Compass
 
-[Personal Learning Compass](https://umncolig.com/) is a Personal Learning Environment (PLE) support application that can:
+[Personal Learning Compass](https://umncolig.com/){:target="_blank"} is a Personal Learning Environment (PLE) support application that can:
 
-- Allow learners to log in with their [Hypothesis](https://web.hypothes.is/) account name;
+- Allow learners to log in with their [Hypothesis](https://web.hypothes.is/){:target="_blank"} account name;
 
 ![PLC-1-gif](https://user-images.githubusercontent.com/35544378/57734231-10f96680-7667-11e9-82aa-cc9ef8265538.gif)
 
@@ -26,7 +26,7 @@
 
 ### Prerequisites
 
-- Node.js & npm: [Click here](https://nodejs.org/en/) to navigate to the Node.js homepage. Follow instructions to install `Node.js` and `npm`.
+- Node.js & npm: [Click here](https://nodejs.org/en/){:target="_blank"} to navigate to the Node.js homepage. Follow instructions to install `Node.js` and `npm`.
 
 ### Intall
 
